@@ -1,7 +1,8 @@
-# wynSingleScenario
-Wyn Single Scenario Sample
+# Wyn Single Scenario Sample
 ----------------------------------
 This sample showcases the newly added feature in Wyn Enterprise 4.1 to integrate individual dashboard scenarios in a web app using iframe.
+
+Here's a screen shot of the final output on running this sample.
 
 ![alt text](Screenshot.PNG)
 
