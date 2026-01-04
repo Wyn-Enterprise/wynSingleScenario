@@ -9,7 +9,7 @@ export default class App extends React.Component<any, any> {
         super(props);
         this.state = {
             token: 'dea83533c9bd2a7f941c0483afeb1962293cb00c895afb05bfb43cde977e0757',
-            serverURL: 'https://demo.wynenterprise.com/',
+            serverURL: 'https://demo.wynenterprise.com',
             dashboardID: '11fe2971-ae21-476a-8f93-e2bda7fd2959',
             docTitle: 'Retail Sales Analysis',
             documentType: 'dbd',
