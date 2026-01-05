@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './styles/App.scss';
 import DashboardView from './components/DashboardView';
 import DashboardsList from './components/DashboardsList';
 
@@ -63,8 +62,8 @@ export default class App extends React.Component<any, any> {
         const scenario4Url = this.generateScenarioUrl("column-10");
 
         const Application = (
-            <div className="App">
-                <div className="boxShadow">                    
+            <div className="flex h-screen text-center justify-start font-sans">
+                <div>                    
                     <DashboardsList regionSelected={this.regionSelected} storeSelected={this.storeSelected} />
                 </div>
                 <DashboardView selectedRegion={selectedRegion} selectedStore={selectedStore} scenario1Url={scenario1Url} scenario2Url={scenario2Url}
