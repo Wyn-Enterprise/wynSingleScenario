@@ -1,7 +1,5 @@
 import * as React from "react";
-import "../styles/DashboardsList.scss";
-import { Collapse, Button } from 'react-bootstrap';
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 
 export default class DashboardsList extends React.Component<any, any> {
 
@@ -37,8 +35,8 @@ export default class DashboardsList extends React.Component<any, any> {
             },
             selectedRegion: "All",
             selectedStorelist: [],
-            openRegions: false,
-            openStores: false
+            openRegions: true,
+            openStores: true
         };
     }
 
@@ -65,8 +63,10 @@ export default class DashboardsList extends React.Component<any, any> {
 
                 stores = selectedRegionStores.map((store, i) => {
                     return (
-                        <li key={i} className="list-group-item" onClick={() => this.onStoreClick(store)}>
-                            <h3 title={store.storeName}>{store.storeName}</h3>
+                        <li key={i} 
+                            className="flex px-6 py-2 cursor-pointer text-slate-400 hover:text-white hover:bg-slate-800 transition-colors duration-200 items-center rounded-md mx-2" 
+                            onClick={() => this.onStoreClick(store)}>
+                            <h3 title={store.storeName} className="truncate text-sm font-medium">{store.storeName}</h3>
                         </li>
                     )
                 });
@@ -83,8 +83,10 @@ export default class DashboardsList extends React.Component<any, any> {
 
                 stores = selectedRegionStores.map((store, i) => {
                     return (
-                        <li key={i} className="list-group-item" onClick={() => this.onStoreClick(store)}>
-                            <h3 title={store.storeName}>{store.storeName}</h3>
+                        <li key={i} 
+                            className="flex px-6 py-2 cursor-pointer text-slate-400 hover:text-white hover:bg-slate-800 transition-colors duration-200 items-center rounded-md mx-2" 
+                            onClick={() => this.onStoreClick(store)}>
+                            <h3 title={store.storeName} className="truncate text-sm font-medium">{store.storeName}</h3>
                         </li>
                     )
                 });
@@ -92,45 +94,52 @@ export default class DashboardsList extends React.Component<any, any> {
         }
 
         return (
-            <div className="dashboardsList">
-                <div className="topBar">
-                    <img className="logoImg" src="/images/Sales_Store_Logo.png" alt="logo" />
+            <div className="flex flex-col w-72 h-full bg-slate-900 border-r border-slate-800 shadow-xl z-10">
+                <div className="h-20 flex items-center justify-center bg-slate-950 border-b border-slate-800">
+                    <img className="h-12 object-contain" src="/images/Sales_Store_Logo.png" alt="logo" />
                 </div>
-                <div className="regionsList">
-                    <Button className="headerButton"
-                        onClick={() => this.setState({ openRegions: !openRegions })}
-                        aria-controls="example-collapse-text"
-                        aria-expanded={openRegions}>
-                        <FaChevronDown />&nbsp;
-                        Region
-                    </Button>
-                    <Collapse in={this.state.openRegions}>
-                        <ul className="list-group list-group-flush">
-                            {regionsList.map((region, index) => (
-                                <li key={index} className="list-group-item" onClick={() => this.onRegionClick(region.name)}>
-                                    <h3 title={region.name}>{region.name}</h3>
-                                </li>
-                            ))}
-                        </ul>
-                    </Collapse>
-                </div>
-                <div className="storesList">
-                    <Button className="headerButton"
-                        onClick={() => this.setState({ openStores: !openStores })}
-                        aria-controls="example-collapse-text"
-                        aria-expanded={openStores}>
-                        <FaChevronDown />&nbsp;
-                        Store
-                    </Button>
-                    <Collapse in={this.state.openStores}>
-                        <div>
-                            <div className="storesDiv">
-                                <ul className="list-group list-group-flush">
-                                    {stores}
-                                </ul>
-                            </div>
-                        </div>
-                    </Collapse>
+                
+                <div className="flex-1 overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+                    <div className="mb-2">
+                        <button className="w-full flex items-center px-4 py-3 text-slate-200 font-semibold hover:bg-slate-800 transition-colors focus:outline-none"
+                            onClick={() => this.setState({ openRegions: !openRegions })}
+                            aria-controls="region-collapse"
+                            aria-expanded={openRegions}>
+                            <span className="mr-3 text-xs text-slate-500">
+                                {openRegions ? <FaChevronDown /> : <FaChevronRight />}
+                            </span>
+                            Region
+                        </button>
+                        {openRegions && (
+                            <ul className="list-none p-0 m-0 space-y-1">
+                                {regionsList.map((region, index) => (
+                                    <li key={index} 
+                                        className={`flex px-10 py-2 cursor-pointer items-center transition-colors duration-200 rounded-md mx-2
+                                            ${selectedRegion === region.name ? 'bg-blue-600/20 text-blue-400 font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}
+                                        onClick={() => this.onRegionClick(region.name)}>
+                                        <h3 title={region.name} className="truncate text-sm">{region.name}</h3>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
+                    <div>
+                        <button className="w-full flex items-center px-4 py-3 text-slate-200 font-semibold hover:bg-slate-800 transition-colors focus:outline-none"
+                            onClick={() => this.setState({ openStores: !openStores })}
+                            aria-controls="store-collapse"
+                            aria-expanded={openStores}>
+                            <span className="mr-3 text-xs text-slate-500">
+                                {openStores ? <FaChevronDown /> : <FaChevronRight />}
+                            </span>
+                            Store
+                        </button>
+                        {openStores && (
+                            <ul className="list-none p-0 m-0 space-y-1">
+                                {stores}
+                            </ul>
+                        )}
+                    </div>
                 </div>
             </div>
         );

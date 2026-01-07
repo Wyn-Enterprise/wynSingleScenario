@@ -1,5 +1,4 @@
 import * as React from "react";
-import "../styles/DashboardView.scss";
 import DashboardsList from "./DashboardsList";
 
 export default class DashboardView extends React.Component<any, any> {
@@ -16,70 +15,79 @@ export default class DashboardView extends React.Component<any, any> {
         const imageUrl = "/images/";
         let storeImageUrl = imageUrl + "CommonStore.jpg";
 
-        let selectedRegionStr = "", selectedStoreStr = "", selectedStoreAddress, selectedManagerStr;
+        let selectedRegionStr = "Select a Region", selectedStoreStr = "Select a Store", selectedStoreAddress = "", selectedManagerStr = "";
         if (selectedRegion != "All") {
-            selectedRegionStr = "Region : " + selectedRegion;
+            selectedRegionStr = selectedRegion;
             if (selectedStore != null) {
                 storeImageUrl = imageUrl + selectedStore.storeName + ".jpg";
-                selectedStoreStr = " Store : " + selectedStore.storeName;
+                selectedStoreStr = selectedStore.storeName;
                 selectedStoreAddress = selectedStore.address;
-                selectedManagerStr = "Store Manager : " + selectedStore.manager;
+                selectedManagerStr = selectedStore.manager;
 
             }
         }
         else if (selectedRegion == "All" && selectedStore != null) {
             storeImageUrl = imageUrl + selectedStore.storeName + ".jpg";
-            selectedStoreStr = " Store : " + selectedStore.storeName;
+            selectedStoreStr = selectedStore.storeName;
             selectedStoreAddress = selectedStore.address;
-            selectedManagerStr = "Store Manager : " + selectedStore.manager;
+            selectedManagerStr = selectedStore.manager;
         }
 
         return (
-            <div className="dashboardView">
-                <div className="itemBar">
-                    {this.state.docTitle}
+            <div className="flex flex-col w-full h-full bg-slate-950 overflow-hidden">
+                <div className="h-16 w-full px-6 flex items-center bg-slate-900 border-b border-slate-800 shadow-md z-10">
+                    <h1 className="text-xl font-bold text-slate-100 tracking-wide">{this.state.docTitle}</h1>
                 </div>
-                <div className="dashView">
-                    <div className="selection">
-                        <div>
-                            <img className="imgStore" src={storeImageUrl} alt="logo" />
-                        </div>
-                        <div className="selected">
-                            <div className="selectedRegion">
-                                {selectedRegionStr}
+                
+                <div className="flex flex-1 p-6 gap-6 overflow-hidden">
+                    {/* Left Panel: Store Info */}
+                    <div className="w-1/3 flex flex-col gap-6 overflow-y-auto pr-2">
+                        <div className="bg-slate-900 rounded-xl shadow-lg overflow-hidden border border-slate-800">
+                            <div className="h-64 overflow-hidden relative group">
+                                <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src={storeImageUrl} alt="Store" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                                <div className="absolute bottom-4 left-4 text-white">
+                                    <h2 className="text-2xl font-bold">{selectedStoreStr}</h2>
+                                    <p className="text-slate-300 text-sm">{selectedRegionStr}</p>
+                                </div>
                             </div>
-                            <div className="selectedRegion">
-                                {selectedStoreStr}
+                            
+                            <div className="p-6 space-y-4">
+                                <div>
+                                    <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Address</p>
+                                    <p className="text-slate-200">{selectedStoreAddress || "No address available"}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Manager</p>
+                                    <p className="text-slate-200">{selectedManagerStr || "N/A"}</p>
+                                </div>
+                                <div className="pt-4 border-t border-slate-800">
+                                    <p className="text-slate-400 text-sm leading-relaxed">
+                                        Retail analytics is the process of using analytical tools to provide analysis of business trends,
+                                        patterns, and performance in the retail industry.
+                                    </p>
+                                </div>
                             </div>
-                            <div className="selectedRegion">
-                                {selectedStoreAddress}
-                            </div>
-                            <div className="selectedRegion">
-                                {selectedManagerStr}
-                            </div>
-                        </div>
-                        <div className="analytics">
-                            Retail analytics is the process of using analytical tools to provide analysis of business trends,
-                            patterns, and performance in the retail industry. Retail business analytics allow you to leverage
-                            data-driven insight from your business and your customers to improve the customer experience,
-                            increase your sales, and optimize operations.
                         </div>
                     </div>
-                    <div className="scenarioViewer">
-                        <div className="scenarios">
-                            <div className="viewer1">
-                                <iframe className="dashboard-preview" title="Scenario View" src={scenario1Url ? `${serverUrl}${scenario1Url}` : ''} />
+
+                    {/* Right Panel: Dashboards */}
+                    <div className="flex-1 flex flex-col gap-6 overflow-y-auto pb-4">
+                        <div className="grid grid-cols-2 gap-6 h-64">
+                            <div className="bg-slate-900 rounded-xl shadow-lg border border-slate-800 p-1 overflow-hidden">
+                                <iframe className="w-full h-full rounded-lg bg-slate-800" title="Scenario View 1" src={scenario1Url ? `${serverUrl}${scenario1Url}` : ''} />
                             </div>
-                            <div className="viewer1">
-                                <iframe className="dashboard-preview" title="Scenario View" src={scenario2Url ? `${serverUrl}${scenario2Url}` : ''} />
+                            <div className="bg-slate-900 rounded-xl shadow-lg border border-slate-800 p-1 overflow-hidden">
+                                <iframe className="w-full h-full rounded-lg bg-slate-800" title="Scenario View 2" src={scenario2Url ? `${serverUrl}${scenario2Url}` : ''} />
                             </div>
                         </div>
-                        <div className="chartViewer">
-                            <div className="chartTitle">
-                                <span>Monthly Sales</span>
+                        
+                        <div className="flex-1 bg-slate-900 rounded-xl shadow-lg border border-slate-800 flex flex-col p-1">
+                            <div className="px-4 py-2 border-b border-slate-800 mb-1">
+                                <h3 className="text-slate-200 font-semibold">Monthly Sales Analysis</h3>
                             </div>
-                            <div className="viewer2">
-                                <iframe className="dashboard-preview" title="Scenario View" src={scenario3Url ? `${serverUrl}${scenario3Url}` : ''} />
+                            <div className="flex-1 overflow-hidden relative">
+                                <iframe className="w-full h-full rounded-lg bg-slate-800 absolute inset-0" title="Scenario View 3" src={scenario3Url ? `${serverUrl}${scenario3Url}` : ''} />
                             </div>
                         </div>
                     </div>
